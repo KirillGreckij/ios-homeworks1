@@ -17,20 +17,46 @@ class FeedViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    private let stackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.spacing = 10
+        stackView.alignment = .center
+        stackView.backgroundColor = .red
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
     
-    private let button: UIButton = {
+    private let firstButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Post", for: .normal)
+        button.setTitle("First button", for: .normal)
         button.setTitleColor(UIColor.black, for: .normal)
         button.backgroundColor = .red
-        button.layer.cornerRadius = 14
+        return button
+    }()
+
+    private let secondButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Second button", for: .normal)
+        button.setTitleColor(UIColor.black, for: .normal)
+        button.backgroundColor = .red
         return button
     }()
     
-    
-    func setupButton() {
-        button.addTarget(self, action: #selector(tapOnBlueButton), for: .touchUpInside)
-        setupConstraints()
+    func setupUI(){
+        addTarget()
+        view.addSubview(stackView)
+        stackView.addArrangedSubview(firstButton)
+        stackView.addArrangedSubview(secondButton)
+        
+        NSLayoutConstraint.activate([
+        stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+        stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+    ])
+    }
+    func addTarget() {
+        firstButton.addTarget(self, action: #selector(tapOnBlueButton), for: .touchUpInside)
+        secondButton.addTarget(self, action: #selector(tapOnBlueButton), for: .touchUpInside)
     }
     
     @objc func tapOnBlueButton() {
@@ -38,7 +64,6 @@ class FeedViewController: UIViewController {
         navigationController?.pushViewController(exampleController, animated: true)
     }
     func setupConstraints() {
-        view.addSubview(button)
         view.addSubview(titleLabel)
         
         NSLayoutConstraint.activate([
@@ -50,8 +75,8 @@ class FeedViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        setupButton()
+        setupConstraints()
+        setupUI()
         titleLabel.text = dataSource.title
-        button.frame = CGRect(x: 150, y: 400, width: 100, height: 50)
     }
 }
