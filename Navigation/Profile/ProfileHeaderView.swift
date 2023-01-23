@@ -38,66 +38,76 @@ class ProfileHeaderView: UIView{
     }()
     
     private var setStatusButton : UIButton = {
-        let view = UIButton()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.setTitle("Show status", for: .normal)
-        view.setTitleColor(UIColor.white, for: .normal)
-        view.backgroundColor = .blue
-        view.layer.cornerRadius = 4
-        view.titleLabel?.shadowOffset = CGSize(width: 4, height: 4)
-        view.layer.shadowRadius = 4
-        view.titleLabel?.shadowColor = .black
-        view.layer.shadowOpacity = 0.7
-        return view
+        let setStatusButton = UIButton()
+        setStatusButton.translatesAutoresizingMaskIntoConstraints = false
+        setStatusButton.setTitle("Show status", for: .normal)
+        setStatusButton.setTitleColor(UIColor.white, for: .normal)
+        setStatusButton.backgroundColor = .blue
+        setStatusButton.layer.cornerRadius = 4
+        setStatusButton.layer.shadowOpacity = 0.7
+        setStatusButton.layer.shadowRadius = 4
+        setStatusButton.layer.shadowOffset = CGSize(width: 4, height: 4)
+        return setStatusButton
     }()
     
-    private var statusTextField : UITextField = {
-        let statusTextField = UITextField()
-        statusTextField.translatesAutoresizingMaskIntoConstraints = false
-        return statusTextField
-    }()
+    private var statusTextField = UITextField()
+    
+    private var statusText = "hello"
     
     func setupUI(){
         self.addSubview(avatarImageView)
         self.addSubview(fullNameLabel)
         self.addSubview(statusLabel)
         self.addSubview(setStatusButton)
+        self.addSubview(statusTextField)
+        
+        statusTextField.textColor = .black
+        statusTextField.font = .systemFont(ofSize: 15, weight: .regular)
+        statusTextField.delegate = self
+        statusTextField.backgroundColor = .white
+        statusTextField.layer.cornerRadius = 12
+        statusTextField.layer.borderWidth = 1
+        statusTextField.placeholder = "Write your status"
+        statusTextField.clearButtonMode = .whileEditing
+        statusTextField.translatesAutoresizingMaskIntoConstraints = false
+        statusTextField.becomeFirstResponder()
+        statusTextField.addTarget(self, action: #selector(statusTextChanged), for: .editingChanged)
         
         NSLayoutConstraint.activate([
             avatarImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
             avatarImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 16),
             avatarImageView.heightAnchor.constraint(equalToConstant: 100),
-            avatarImageView.widthAnchor.constraint(equalToConstant: 100)
-        ])
+            avatarImageView.widthAnchor.constraint(equalToConstant: 100),
         
-        NSLayoutConstraint.activate([
             fullNameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 27),
             fullNameLabel.leftAnchor.constraint(equalTo: avatarImageView.rightAnchor, constant: 30),
             fullNameLabel.heightAnchor.constraint(equalToConstant: 25),
-            fullNameLabel.widthAnchor.constraint(equalToConstant: 100)
-        ])
+            fullNameLabel.widthAnchor.constraint(equalToConstant: 100),
         
-        NSLayoutConstraint.activate([
             setStatusButton.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 16),
             setStatusButton.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 16),
             setStatusButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -16),
             setStatusButton.heightAnchor.constraint(equalToConstant: 50),
-        ])
-        
-        NSLayoutConstraint.activate([
+
             statusLabel.bottomAnchor.constraint(equalTo: setStatusButton.topAnchor, constant: -34),
             statusLabel.leftAnchor.constraint(equalTo: avatarImageView.rightAnchor, constant: 30),
             statusLabel.heightAnchor.constraint(equalToConstant: 25),
-            statusLabel.widthAnchor.constraint(equalToConstant: 200)
+            statusLabel.widthAnchor.constraint(equalToConstant: 200),
+            
+            statusTextField.widthAnchor.constraint(equalToConstant: 200),
+            statusTextField.heightAnchor.constraint(equalToConstant: 30),
+            statusTextField.bottomAnchor.constraint(equalTo: setStatusButton.topAnchor, constant: -4),
+            statusTextField.leftAnchor.constraint(equalTo: avatarImageView.rightAnchor, constant: 30)
         ])
     }
-    
-    func addTarget() {
+    func addTarget(){
         setStatusButton.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
     }
-    
+    @objc func statusTextChanged(){
+        statusText = statusTextField.text!
+    }
     @objc func buttonPressed(){
-        print("Статус")
+        statusLabel.text = statusText
     }
     
     override init(frame: CGRect) {
@@ -111,4 +121,11 @@ class ProfileHeaderView: UIView{
         fatalError("init(coder:) has not been implemented")
     }
 }
+extension ProfileHeaderView : UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        statusTextField.resignFirstResponder()
+        return true
+    }
+}
+
 

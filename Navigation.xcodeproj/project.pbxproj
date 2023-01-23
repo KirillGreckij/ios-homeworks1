@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1C78E1AB294744D700D443F1 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C78E1AA294744D700D443F1 /* ProfileHeaderView.swift */; };
+		1C85382C297EAF6700B573D9 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C85382B297EAF6700B573D9 /* LogInViewController.swift */; };
 		1CC9BF5A294078360062544D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CC9BF59294078360062544D /* AppDelegate.swift */; };
 		1CC9BF5C294078360062544D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CC9BF5B294078360062544D /* SceneDelegate.swift */; };
 		1CC9BF63294078370062544D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1CC9BF62294078370062544D /* Assets.xcassets */; };
@@ -22,6 +23,7 @@
 
 /* Begin PBXFileReference section */
 		1C78E1AA294744D700D443F1 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
+		1C85382B297EAF6700B573D9 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		1CC9BF56294078360062544D /* Navigation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Navigation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CC9BF59294078360062544D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1CC9BF5B294078360062544D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -52,6 +54,7 @@
 			children = (
 				1CC9BF7129407B780062544D /* ProfileViewController.swift */,
 				1C78E1AA294744D700D443F1 /* ProfileHeaderView.swift */,
+				1C85382B297EAF6700B573D9 /* LogInViewController.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -168,6 +171,7 @@
 				1CC9BF7629407C000062544D /* InfoViewController.swift in Sources */,
 				1CC9BF7229407B780062544D /* ProfileViewController.swift in Sources */,
 				1CC9BF7029407B530062544D /* FeedViewController.swift in Sources */,
+				1C85382C297EAF6700B573D9 /* LogInViewController.swift in Sources */,
 				1CC9BF5C294078360062544D /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
