@@ -8,36 +8,34 @@
 import UIKit
 
 class LogInViewController: UIViewController {
-    private lazy var scrollView = UIScrollView()
-    private lazy var stackView = UIStackView()
-    private lazy var logo = UIImageView()
-    private lazy var loginTextField = UITextField()
-    private lazy var passwordTextField = UITextField()
-    private lazy var button = UIButton()
-    private var login: String?
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .white
-        navigationController?.navigationBar.isHidden = true
-        setupUI()
-        setupConstraint()
-        setupGestures()
-    }
-    func setupUI(){
+    private lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-        
-        logo.image = UIImage(named: "logo")
-        logo.translatesAutoresizingMaskIntoConstraints = false
-        
+        return scrollView
+    }()
+    private lazy var stackView: UIStackView = {
+        let stackView = UIStackView()
         stackView.axis = .vertical
-        stackView.spacing = 10
+        stackView.spacing = 0.5
+        stackView.layer.borderColor = UIColor.lightGray.cgColor
+        stackView.layer.borderWidth = 0.5
+        stackView.layer.cornerRadius = 10
         stackView.distribution = .fillEqually
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        
-        loginTextField.layer.borderColor = UIColor.lightGray.cgColor
+        return stackView
+    }()
+    private lazy var logo: UIImageView = {
+        let logo = UIImageView()
+        logo.image = UIImage(named: "logo")
+        logo.translatesAutoresizingMaskIntoConstraints = false
+        return logo
+    }()
+    private lazy var loginTextField: UITextField = {
+        let loginTextField = UITextField()
+        /*loginTextField.layer.borderColor = UIColor.lightGray.cgColor
         loginTextField.layer.borderWidth = 0.5
         loginTextField.layer.cornerRadius = 10
+        */
         loginTextField.textColor = .black
         loginTextField.font = .systemFont(ofSize: 16)
         loginTextField.autocapitalizationType = .none
@@ -46,36 +44,52 @@ class LogInViewController: UIViewController {
         loginTextField.placeholder = "Введите логин"
         loginTextField.keyboardType = .emailAddress
         loginTextField.clearButtonMode = .whileEditing
-        //loginTextField.delegate = self
+        loginTextField.delegate = self
         loginTextField.translatesAutoresizingMaskIntoConstraints = false
-        
-        passwordTextField.layer.borderWidth = 0.5
+        return loginTextField
+    }()
+    private lazy var passwordTextField: UITextField = {
+        let passwordTextField = UITextField()
+        /*passwordTextField.layer.borderWidth = 0.5
         passwordTextField.layer.cornerRadius = 10
         passwordTextField.layer.borderColor = UIColor.lightGray.cgColor
+         */
         passwordTextField.backgroundColor = .systemGray6
         passwordTextField.tag = 1
         passwordTextField.returnKeyType = .done
         passwordTextField.placeholder = "Введите пароль"
         passwordTextField.isSecureTextEntry = true
-        //passwordTextField.delegate = self
+        passwordTextField.delegate = self
         passwordTextField.translatesAutoresizingMaskIntoConstraints = false
-        
-        //button.backgroundColor = .systemBlue
+        return passwordTextField
+    }()
+    private lazy var button: UIButton = {
+        let button = UIButton()
         button.setTitle("Log in", for: .normal)
         button.setBackgroundImage(UIImage(named: "blue_pixel"), for: .normal)
         button.layer.cornerRadius = 10
         button.clipsToBounds = true
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(action), for: .touchUpInside)
+        return button
+    }()
+    private var login: String?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+        navigationController?.navigationBar.isHidden = true
+        setupConstraint()
+        setupGestures()
     }
     
     func setupConstraint(){
         view.addSubview(scrollView)
         scrollView.addSubview(self.logo)
         scrollView.addSubview(self.stackView)
+        scrollView.addSubview(self.button)
         self.stackView.addArrangedSubview(self.loginTextField)
         self.stackView.addArrangedSubview(self.passwordTextField)
-        self.stackView.addArrangedSubview(self.button)
         
         NSLayoutConstraint.activate([
             self.scrollView.topAnchor.constraint(equalTo: self.view.topAnchor),
@@ -90,10 +104,15 @@ class LogInViewController: UIViewController {
             
             self.stackView.topAnchor.constraint(equalTo: self.scrollView.topAnchor, constant: 340),
             self.stackView.centerXAnchor.constraint(equalTo: self.scrollView.centerXAnchor),
-            self.stackView.heightAnchor.constraint(equalToConstant: 170),
+            self.stackView.heightAnchor.constraint(equalToConstant: 100),
             self.stackView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
-            self.stackView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16)
+            self.stackView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
             
+            self.button.topAnchor.constraint(equalTo: self.stackView.bottomAnchor, constant: 16),
+            self.button.centerXAnchor.constraint(equalTo: self.scrollView.centerXAnchor),
+            self.button.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
+            self.button.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
+            self.button.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
     
@@ -128,7 +147,7 @@ class LogInViewController: UIViewController {
             let keyboardRectangle = keyboardFrame.cgRectValue
             let keyboardHeight = keyboardRectangle.height
             
-            let loginButtonBottomPointY = self.stackView.frame.origin.y + self.button.frame.origin.y + self.button.frame.height // self.button.frame.origin.y - положение относительно супервью - self.stackView - поэтому прибавляем положение стека.
+            let loginButtonBottomPointY = self.stackView.frame.origin.y + self.button.frame.origin.y + self.button.frame.height
             let keyboardOriginY = self.view.frame.height - keyboardHeight
 
             let yOffset = keyboardOriginY < loginButtonBottomPointY
@@ -154,21 +173,15 @@ class LogInViewController: UIViewController {
 
 extension LogInViewController: UITextFieldDelegate {
     
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        
-    }
+    func textFieldDidBeginEditing(_ textField: UITextField) {}
     
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        
-    }
+    func textFieldDidEndEditing(_ textField: UITextField) {}
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
         print("🍏 \(textField.text)")
         if textField.tag == 0 {
             self.login = textField.text
-        } else if textField.tag == 1 {
-            
-        }
+        } else if textField.tag == 1 {}
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -177,7 +190,6 @@ extension LogInViewController: UITextFieldDelegate {
         } else {
             passwordTextField.resignFirstResponder()
         }
-        
         return true
     }
 }
