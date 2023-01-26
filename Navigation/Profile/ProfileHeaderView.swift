@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProfileHeaderView: UIView{
+class ProfileHeaderView: UITableViewHeaderFooterView {
     
     private var fullNameLabel : UILabel = {
        let view = UILabel()
@@ -110,8 +110,8 @@ class ProfileHeaderView: UIView{
         statusLabel.text = statusText
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
         self.backgroundColor = .lightGray
         setupUI()
         addTarget()
@@ -127,5 +127,3 @@ extension ProfileHeaderView : UITextFieldDelegate {
         return true
     }
 }
-
-

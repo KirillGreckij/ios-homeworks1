@@ -32,10 +32,6 @@ class LogInViewController: UIViewController {
     }()
     private lazy var loginTextField: UITextField = {
         let loginTextField = UITextField()
-        /*loginTextField.layer.borderColor = UIColor.lightGray.cgColor
-        loginTextField.layer.borderWidth = 0.5
-        loginTextField.layer.cornerRadius = 10
-        */
         loginTextField.textColor = .black
         loginTextField.font = .systemFont(ofSize: 16)
         loginTextField.autocapitalizationType = .none
@@ -50,10 +46,6 @@ class LogInViewController: UIViewController {
     }()
     private lazy var passwordTextField: UITextField = {
         let passwordTextField = UITextField()
-        /*passwordTextField.layer.borderWidth = 0.5
-        passwordTextField.layer.cornerRadius = 10
-        passwordTextField.layer.borderColor = UIColor.lightGray.cgColor
-         */
         passwordTextField.backgroundColor = .systemGray6
         passwordTextField.tag = 1
         passwordTextField.returnKeyType = .done
@@ -178,10 +170,6 @@ extension LogInViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {}
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        print("🍏 \(textField.text)")
-        if textField.tag == 0 {
-            self.login = textField.text
-        } else if textField.tag == 1 {}
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
